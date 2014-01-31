@@ -23,6 +23,7 @@ angular.element(document).ready ->
 
   # Application code
   angular.module('app').controller 'ParseController', ($scope) ->
+    $scope.angular_loaded = true
     $scope.ynab_cols = ['Date','Payee','Category','Memo','Outflow','Inflow']
     $scope.data = {}
     $scope.ynab_map =
@@ -35,7 +36,7 @@ angular.element(document).ready ->
     $scope.data_object = new DataObject()
 
     $scope.$watch 'data.source', (newValue, oldValue) ->
-      $scope.data_object.parse_csv(newValue)
+      $scope.data_object.parse_csv(newValue) if newValue.length > 0
 
     $scope.export = (limit) -> $scope.data_object.converted_json(limit, $scope.ynab_map)
     $scope.csvString = -> $scope.data_object.converted_csv(null, $scope.ynab_map)

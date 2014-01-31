@@ -16,54 +16,69 @@
     <script type="text/coffeescript" src="./data_object.coffee"></script>
     <script type="text/coffeescript" src="./app.coffee"></script>
   </head>
-  <body>
-    <div class='container' ng-controller='ParseController'>
-      <br>
-      <input id='file' type='file' fileread='data.source' />
-      <hr>
-      <h2>Source Data <span>(1st 10 rows)</span></h2>
-      <!-- <pre>{{data.json.results}}</pre> -->
-      <div class='table-container' ng-if='data_object.base_json'>
-        <table class='table'>
-          <thead>
-            <tr>
-              <th ng-repeat='col in data_object.fields()'>{{col}}</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat='row in data_object.rows() | limitTo:10'>
-              <td ng-repeat='col in data_object.fields()'>{{row[col]}}</td>
-            </tr>
-          </tbody>
-        </table>
+  <body ng-controller='ParseController' ng-class="{angular_loaded: angular_loaded}">
+
+    <div id='button_container' class='show_on_load'>
+      <div class='container'>
+        <h1>YNAB CSV</h1>
+        <div class='btn btn-primary pull-right' ng-if='data_object.base_json' ng-click='downloadFile()'>Download YNAB Data</div>
+        <a href='https://github.com/halloffame/ynab-csv' target='_blank' class='btn btn-default'>Fork Me</a>
       </div>
-      <hr>
-      <h2>YNAB Data <span>(1st 10 rows)</span></h2>
-
-      <!-- <pre>{{ export() }}</pre> -->
-
-      <div class='table-container results'>
-        <table class='table'>
-          <thead>
-            <tr>
-              <th ng-repeat='col in ynab_cols'>
-                {{col}}<br/>
-                <select ng-model="ynab_map[col]" ng-options="f for f in data_object.fields()"></select>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat='row in export(10)'>
-              <td ng-repeat='col in ynab_cols'>
-                <span>{{row[col]}}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </table>
     </div>
 
-    <!-- <pre>{{csvString()}}</pre> -->
-    <div class='btn btn-primary' ng-click='downloadFile()'>Download File</div>
+    <div class='container show_on_load'>
+      <br>
+      <div id='upload_wrapper' ng-if='!data_object.base_json'>
+        <div id='drop_text'>Drop File</div>
+        <div><div class='btn btn-primary'>Or Choose</div></div>
+        <br>
+        <input id='file' type='file' fileread='data.source' />
+      </div>
+
+      <div id='tool_wrapper' ng-if='data_object.base_json'>
+        <h2>Source Data <span>(1st 10 rows)</span></h2>
+        <div class='table-container'>
+          <table class='table'>
+            <thead>
+              <tr>
+                <th ng-repeat='col in data_object.fields()'>{{col}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat='row in data_object.rows() | limitTo:10'>
+                <td ng-repeat='col in data_object.fields()'>{{row[col]}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <h2>YNAB Data <span>(1st 10 rows)</span></h2>
+
+        <div class='table-container results'>
+          <table class='table'>
+            <thead>
+              <tr>
+                <th ng-repeat='col in ynab_cols'>
+                  {{col}}<br/>
+                  <select ng-model="ynab_map[col]" ng-options="f for f in data_object.fields()"></select>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat='row in export(10)'>
+                <td ng-repeat='col in ynab_cols'>
+                  <span>{{row[col]}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <div id='angular_is_loading'>
+      <div class='loading_text'>Loading...</div>
+    </div>
   </body>
 </html>
