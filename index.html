@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!-- vim: set tabstop=2 shiftwidth=2 softtabstop=2 expandtab : -->
+<html lang="en">
+  <head>
+    <title>Checkbox - dropbox.js Sample Application</title>
+    <link rel="icon" type="image/png" href="images/icon16.png" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="./app.css" />
+    <script type="text/javascript" src="lib/coffee-script.js"></script>
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/jquery.parse.min.js"></script>
+    <script type="text/javascript" src="lib/moment.min.js"></script>
+    <script type="text/javascript" src="lib/angular.min.js"></script>
+
+    <script type="text/coffeescript" src="./data_object.coffee"></script>
+    <script type="text/coffeescript" src="./app.coffee"></script>
+  </head>
+  <body>
+    <div class='container' ng-controller='ParseController'>
+      <br>
+      <input id='file' type='file' fileread='data.source' />
+      <hr>
+      <h2>Source Data <span>(1st 10 rows)</span></h2>
+      <!-- <pre>{{data.json.results}}</pre> -->
+      <div class='table-container' ng-if='data_object.base_json'>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th ng-repeat='col in data_object.fields()'>{{col}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='row in data_object.rows() | limitTo:10'>
+              <td ng-repeat='col in data_object.fields()'>{{row[col]}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <hr>
+      <h2>YNAB Data <span>(1st 10 rows)</span></h2>
+
+      <!-- <pre>{{ export() }}</pre> -->
+
+      <div class='table-container results'>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th ng-repeat='col in ynab_cols'>
+                {{col}}<br/>
+                <select ng-model="ynab_map[col]" ng-options="f for f in data_object.fields()"></select>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat='row in export(10)'>
+              <td ng-repeat='col in ynab_cols'>
+                <span>{{row[col]}}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </table>
+    </div>
+
+    <!-- <pre>{{csvString()}}</pre> -->
+    <div class='btn btn-primary' ng-click='downloadFile()'>Download File</div>
+  </body>
+</html>

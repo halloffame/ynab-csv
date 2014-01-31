@@ -1,0 +1,6 @@
+// vim: set tabstop=2 shiftwidth=2 softtabstop=2 expandtab :
+
+.table-container { overflow: auto; width: 100%; max-height: 250px; }
+.table-container.results { max-height: none; }
+
+h2 span { font-style: italic; font-size: 0.6em; color: #999; padding-left: 10px;}
