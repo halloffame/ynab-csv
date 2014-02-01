@@ -23,7 +23,6 @@ html, body, .dropzone { height: 100%; }
 
 
   #tool_wrapper { margin-bottom: 40px; }
-  #tool_wrapper .table-container { overflow: auto; width: 100%; max-height: 200px; }
-  #tool_wrapper .table-container.results { max-height: none; }
-  #tool_wrapper h2 span { font-style: italic; font-size: 0.6em; color: #999; padding-left: 10px;}
-
+  #tool_wrapper .table-container { overflow: auto; }
+  #tool_wrapper .panel .panel-heading em { font-size: 10px; margin-left: 10px; }
+  #tool_wrapper table select { max-width: 100px; }

@@ -1,9 +1,12 @@
 ynab_cols = ['Date','Payee','Category','Memo','Outflow','Inflow']
 numberfy = (val) ->
-  # check for negative signs or parenthases.
-  is_negative = if (val.match("-") || val.match(/\(.*\)/)) then -1 else 1
-  # return just the number and make it negative if needed.
-  +val.match(/\d+.?\d*/)[0] * is_negative
+  if isNaN(val)
+    # check for negative signs or parenthases.
+    is_negative = if (val.match("-") || val.match(/\(.*\)/)) then -1 else 1
+    # return just the number and make it negative if needed.
+    +(val.match(/\d+.?\d*/)[0]) * is_negative
+  else
+    val
 
 parseDate = (val) -> moment(val).format('MM/DD/YYYY') if val && val.length > 0
 

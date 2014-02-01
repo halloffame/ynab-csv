@@ -30,13 +30,15 @@ angular.element(document).ready ->
     link: (scope, element, attributes) ->
       element.bind 'dragenter', (event) ->
         element.addClass('dragging')
-        event.preventDefault();
+        event.preventDefault()
       element.bind 'dragover', (event) ->
         element.addClass('dragging')
-        event.preventDefault();
+        event.preventDefault()
+        efct = event.originalEvent.dataTransfer.effectAllowed
+        event.originalEvent.dataTransfer.dropEffect = if 'move' == efct or 'linkMove' == efct then 'move' else 'copy'
       element.bind 'dragleave', (event) ->
         element.removeClass('dragging')
-        event.preventDefault();
+        event.preventDefault()
 
       element.bind 'drop', (event) ->
         element.removeClass('dragging')
