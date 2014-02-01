@@ -74,9 +74,14 @@ angular.element(document).ready ->
 
     $scope.export = (limit) -> $scope.data_object.converted_json(limit, $scope.ynab_map)
     $scope.csvString = -> $scope.data_object.converted_csv(null, $scope.ynab_map)
-    $scope.downloadFile = -> window.open('data:text/csv;base64,' + btoa($scope.csvString()))
+    $scope.downloadFile = ->
+      a           = document.createElement('a')
+      a.href      = 'data:attachment/csv;base64,' + btoa($scope.csvString())
+      a.target    = '_blank'
+      a.download  = 'ynab_data.csv'
 
-
+      document.body.appendChild(a)
+      a.click()
 
 
   angular.bootstrap document, ['app']
