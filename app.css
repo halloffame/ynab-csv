@@ -1,23 +1,29 @@
-/*.container { display: none; margin-bottom: 20px; }
-.container.angular_loaded { display: block; }
-*/
-body:not(.angular_loaded) .show_on_load { display: none; }
-.angular_loaded .hide_on_load { display: none; }
+html, body, .dropzone { height: 100%; }
 
-#angular_is_loading { position: fixed; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0,0,0,.5); color: white; font-size: 70px; text-align: center; padding-top: 200px; box-shadow: 0 0 10px rgba(0,0,0,.5);
-  transition: all 2s; -webkit-transition: all 2s; }
-body.angular_loaded #angular_is_loading { top: 3000px; bottom: -3000px; }
-
-#upload_wrapper { text-align: center;}
-#upload_wrapper #drop_text { font-size: 60px; padding-top: 200px; }
-
-#tool_wrapper { margin-bottom: 40px; }
-
-.table-container { overflow: auto; width: 100%; max-height: 200px; }
-.table-container.results { max-height: none; }
-
-h2 span { font-style: italic; font-size: 0.6em; color: #999; padding-left: 10px;}
+/* Loading helpers*/
+  body:not(.angular_loaded) .show_on_load { display: none; }
+  .angular_loaded .hide_on_load { display: none; }
+  #angular_is_loading { position: fixed; top: 0; right: 0; bottom: 0; left: 0; background-color: rgba(0,0,0,.5); color: white; font-size: 70px; text-align: center; padding-top: 200px; box-shadow: 0 0 10px rgba(0,0,0,.5); transition: all 2s; -webkit-transition: all 2s; }
+  body.angular_loaded #angular_is_loading { display: none; top: 3000px; bottom: -3000px; }
 
 
-#button_container { padding: 10px; background-color: rgb(240, 240, 240);; box-shadow: 0 0 10px rgba(0,0,0,.5); }
-#button_container h1 { display: inline-block; font-size: 20px; margin: 0; vertical-align: middle; margin-right: 15px;}
+/* Header */
+#header_nav { position: fixed; top: 0; left: 0; right: 0; padding: 10px; background-color: rgb(240, 240, 240);; box-shadow: 0 0 10px rgba(0,0,0,.5); }
+#header_nav h1 { display: inline-block; font-size: 20px; margin: 0; vertical-align: middle; margin-right: 15px;}
+
+
+/* Dropzone */
+.dropzone { padding-top: 54px; }
+.dropzone.dragging { background-color: #D2E4F8; }
+
+  #upload_wrapper { text-align: center;}
+  #upload_wrapper #drop_text { font-size: 60px; padding-top: 200px; }
+  #upload_wrapper .fileUpload { position: relative; overflow: hidden; margin: 10px; }
+  #upload_wrapper .fileUpload input { position: absolute; top: 0; right: 0; margin: 0; padding: 0; font-size: 20px; cursor: pointer; opacity: 0; filter: alpha(opacity=0); }
+
+
+  #tool_wrapper { margin-bottom: 40px; }
+  #tool_wrapper .table-container { overflow: auto; width: 100%; max-height: 200px; }
+  #tool_wrapper .table-container.results { max-height: none; }
+  #tool_wrapper h2 span { font-style: italic; font-size: 0.6em; color: #999; padding-left: 10px;}
+

@@ -5,6 +5,7 @@
     <title>Checkbox - dropbox.js Sample Application</title>
     <link rel="icon" type="image/png" href="images/icon16.png" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 
     <link rel="stylesheet" type="text/css" href="./app.css" />
     <script type="text/javascript" src="lib/coffee-script.js"></script>
@@ -18,67 +19,75 @@
   </head>
   <body ng-controller='ParseController' ng-class="{angular_loaded: angular_loaded}">
 
-    <div id='button_container' class='show_on_load'>
+    <div id='header_nav' class='show_on_load'>
       <div class='container'>
-        <h1>YNAB CSV</h1>
-        <div class='btn btn-primary pull-right' ng-if='data_object.base_json' ng-click='downloadFile()'>Download YNAB Data</div>
-        <a href='https://github.com/halloffame/ynab-csv' target='_blank' class='btn btn-default'>Fork Me</a>
+        <!-- <h1>YNAB CSV</h1> -->
+        <div class='pull-right' ng-if='data_object.base_json'>
+          <!-- <div class='btn btn-default' ng-click='reloadApp()'><i class='fa fa-refresh'></i></div> -->
+          <div class='btn btn-primary' ng-click='downloadFile()'><i class='fa fa-cloud-download'></i> Save YNAB Data</div>
+        </div>
+        <a href='https://github.com/halloffame/ynab-csv' target='_blank' class='btn btn-default'><i class='fa fa-github'></i> Fork Me</a>
       </div>
     </div>
 
-    <div class='container show_on_load'>
-      <br>
-      <div id='upload_wrapper' ng-if='!data_object.base_json'>
-        <div id='drop_text'>Drop File</div>
-        <div><div class='btn btn-primary'>Or Choose</div></div>
+    <div dropzone='data.source'>
+      <div class='container show_on_load'>
         <br>
-        <input id='file' type='file' fileread='data.source' />
-      </div>
-
-      <div id='tool_wrapper' ng-if='data_object.base_json'>
-        <h2>Source Data <span>(1st 10 rows)</span></h2>
-        <div class='table-container'>
-          <table class='table'>
-            <thead>
-              <tr>
-                <th ng-repeat='col in data_object.fields()'>{{col}}</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat='row in data_object.rows() | limitTo:10'>
-                <td ng-repeat='col in data_object.fields()'>{{row[col]}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <hr>
-        <h2>YNAB Data <span>(1st 10 rows)</span></h2>
-
-        <div class='table-container results'>
-          <table class='table'>
-            <thead>
-              <tr>
-                <th ng-repeat='col in ynab_cols'>
-                  {{col}}<br/>
-                  <select ng-model="ynab_map[col]" ng-options="f for f in data_object.fields()"></select>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat='row in export(10)'>
-                <td ng-repeat='col in ynab_cols'>
-                  <span>{{row[col]}}</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div id='upload_wrapper' ng-if='!data_object.base_json'>
+          <div id='drop_text'>Drop File</div>
+          <br>
+          <!-- <div class='btn btn-primary'>Or Choose</div> -->
+          <div class='fileUpload btn btn-primary'>
+            <span>Or Choose <i class='fa fa-folder-open'></i></span>
+            <input id='file' type='file' fileread='data.source' />
+          </div>
         </div>
 
+        <div id='tool_wrapper' ng-if='data_object.base_json'>
+          <h2>Source Data <span>(1st 10 rows)</span></h2>
+          <div class='table-container'>
+            <table class='table'>
+              <thead>
+                <tr>
+                  <th ng-repeat='col in data_object.fields()'>{{col}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat='row in data_object.rows() | limitTo:10'>
+                  <td ng-repeat='col in data_object.fields()'>{{row[col]}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <hr>
+          <h2>YNAB Data <span>(1st 10 rows)</span></h2>
+
+          <div class='table-container results'>
+            <table class='table'>
+              <thead>
+                <tr>
+                  <th ng-repeat='col in ynab_cols'>
+                    {{col}}<br/>
+                    <select ng-model="ynab_map[col]" ng-options="f for f in data_object.fields()"></select>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat='row in export(10)'>
+                  <td ng-repeat='col in ynab_cols'>
+                    <span>{{row[col]}}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
       </div>
     </div>
 
     <div id='angular_is_loading'>
-      <div class='loading_text'>Loading...</div>
+      <div class='loading_text'><i class="fa fa-spinner fa-spin"></i> Loading...</div>
     </div>
   </body>
 </html>
