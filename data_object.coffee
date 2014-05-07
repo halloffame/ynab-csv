@@ -1,5 +1,8 @@
 ynab_cols = ['Date','Payee','Category','Memo','Outflow','Inflow']
 numberfy = (val) ->
+  # Convert val into empty string if it is undefined or null
+  if !val?
+    val = ''  
   if isNaN(val)
     # check for negative signs or parenthases.
     is_negative = if (val.match("-") || val.match(/\(.*\)/)) then -1 else 1
