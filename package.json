@@ -1,0 +1,8 @@
+{
+  "name": "ynab-csv",
+  "version": "1.0.0",
+  "dependencies": {
+    "express": "^4.10.7"
+  },
+  "homepage": "https://github.com/roanosullivan/ynab-csv"
+}
