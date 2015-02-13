@@ -1,8 +1,12 @@
+# These are the columns that YNAB expects
 ynab_cols = ['Date','Payee','Category','Memo','Outflow','Inflow']
+
+# Converts a string value into a number.
+# Filters out all special characters like $ or ,
 numberfy = (val) ->
   # Convert val into empty string if it is undefined or null
   if !val?
-    val = ''  
+    val = ''
   if isNaN(val)
     # check for negative signs or parenthases.
     is_negative = if (val.match("-") || val.match(/\(.*\)/)) then -1 else 1
@@ -13,27 +17,45 @@ numberfy = (val) ->
   else
     val
 
+# Uses moment.js to parse and format the date into the correct format
 parseDate = (val) -> moment(val).format('MM/DD/YYYY') if val && val.length > 0
 
+
+# This class does all the heavy lifting.
+# It takes the and can format it into csv
 class window.DataObject
   constructor: () ->
     @base_json = null
 
-  parse_csv: (csv) -> @base_json = $.parse(csv)
-  fields: -> @base_json.results.fields
-  rows: -> @base_json.results.rows
+  # Parse base csv file as JSON. This will be easier to work with.
+  # It uses http://papaparse.com/ for handling parsing
+  parse_csv: (csv) -> @base_json = Papa.parse(csv, {"header": true})
+  fields: -> @base_json.meta.fields
+  rows: -> @base_json.data
 
+
+  # This method converts base_json into a json file with YNAB specific fields based on
+  #   which fields you choose in the dropdowns in the browser.
+  #
+  # --- parameters ----
+  # limit: expects and integer and limits how many rows get parsed (specifically for preview)
+  #     pass in false or null to do all.
+  # lookup: hash definition of YNAB column names to selected base column names. Lets us
+  #     convert the uploaded CSV file into the columns that YNAB expects.
   converted_json: (limit, lookup) ->
     return nil if @base_json == null
     value = []
 
-    if @base_json.results.rows
-      @base_json.results.rows.forEach (row, index) ->
+    # TODO: You might want to check for errors. Papaparse has an errors field.
+    if @base_json.data
+      @base_json.data.forEach (row, index) ->
         if !limit || index < limit
           tmp_row = {}
           ynab_cols.forEach (col) ->
             cell = row[lookup[col]]
 
+            # Some YNAB columns need special formatting,
+            #   the rest are just returned as they are.
             switch col
               when 'Date' then tmp_row[col] = parseDate(cell)
               when 'Outflow'
@@ -55,6 +77,7 @@ class window.DataObject
 
   converted_csv: (limit, lookup) ->
     return nil if @base_json == null
+    # Papa.unparse string
     string = ynab_cols.join(',') + "\n"
     @.converted_json(limit, lookup).forEach (row) ->
       row_values = []

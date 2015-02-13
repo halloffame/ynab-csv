@@ -34,8 +34,8 @@ angular.element(document).ready ->
       element.bind 'dragover', (event) ->
         element.addClass('dragging')
         event.preventDefault()
-        efct = event.originalEvent.dataTransfer.effectAllowed
-        event.originalEvent.dataTransfer.dropEffect = if 'move' == efct or 'linkMove' == efct then 'move' else 'copy'
+        efct = event.dataTransfer.effectAllowed
+        event.dataTransfer.dropEffect = if 'move' == efct or 'linkMove' == efct then 'move' else 'copy'
       element.bind 'dragleave', (event) ->
         element.removeClass('dragging')
         event.preventDefault()
@@ -50,7 +50,7 @@ angular.element(document).ready ->
           scope.$apply ->
             scope.dropzone = loadEvent.target.result
 
-        reader.readAsText event.originalEvent.dataTransfer.files[0]
+        reader.readAsText event.dataTransfer.files[0]
 
   ]
 
