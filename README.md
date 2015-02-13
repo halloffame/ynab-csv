@@ -1,7 +1,7 @@
 # ynab-csv
 
 
-Tool for making your CSV files ready to import into YNAB. 
+Tool for making your CSV files ready to import into YNAB.
 
 http://halloffame.github.io/ynab-csv/
 
@@ -30,11 +30,11 @@ If you have any other issues or suggestions, go to https://github.com/halloffame
 
 ## Contribute
 
-1. Clone project
+1. Fork and clone the project
 2. `cd` into project
-3. Install node.js
-4. Run `node server.js`
+3. Run `npm install`   # You will need to install node and npm if it is not already
+4. Run `npm start`
 5. Make your changes locally and test them to make sure they work
-6. Commit those changes and push to your cloned repository
+6. Commit those changes and push to your forked repository
 7. Make a new pull request
 
