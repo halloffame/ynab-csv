@@ -1,8 +1,27 @@
 {
   "name": "ynab-csv",
   "version": "1.0.0",
-  "dependencies": {
-    "express": "^4.10.7"
+  "description": "Tool for making your CSV files ready to import into YNAB",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "scripts/run.sh"
   },
-  "homepage": "https://github.com/roanosullivan/ynab-csv"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halloffame/ynab-csv.git"
+  },
+  "keywords": [
+    "ynab",
+    "csv"
+  ],
+  "dependencies": {
+    "express": "^4.11.2"
+  },
+  "author": "Ryan Hall",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/halloffame/ynab-csv/issues"
+  },
+  "homepage": "https://github.com/halloffame/ynab-csv"
 }
