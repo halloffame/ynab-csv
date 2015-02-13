@@ -76,7 +76,7 @@ angular.element(document).ready ->
     $scope.csvString = -> $scope.data_object.converted_csv(null, $scope.ynab_map)
     $scope.downloadFile = ->
       a           = document.createElement('a')
-      a.href      = 'data:attachment/csv;base64,' + btoa($scope.csvString())
+      a.href      = 'data:attachment/csv;base64,' + btoa(unescape(encodeURIComponent($scope.csvString())))
       a.target    = '_blank'
       a.download  = 'ynab_data.csv'
 
