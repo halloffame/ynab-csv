@@ -17,9 +17,6 @@ numberfy = (val) ->
   else
     val
 
-# Uses moment.js to parse and format the date into the correct format
-parseDate = (val) -> moment(val).format('MM/DD/YYYY') if val && val.length > 0
-
 
 # This class does all the heavy lifting.
 # It takes the and can format it into csv
@@ -57,7 +54,6 @@ class window.DataObject
             # Some YNAB columns need special formatting,
             #   the rest are just returned as they are.
             switch col
-              when 'Date' then tmp_row[col] = parseDate(cell)
               when 'Outflow'
                 number = numberfy(cell)
                 if lookup['Outflow'] == lookup['Inflow']
